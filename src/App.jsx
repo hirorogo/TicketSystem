@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxeZNwir5wTo13WBxOehhnl1S7Ud90QhUZEuvPVn0u2L_KRY7UE5tLDzj-chKNoei_bog/exec";
+const GAS_URL = "test";
 // ↑ あなたのデプロイ済みApps ScriptのURLに変更してください
 
 export default function App() {
@@ -79,7 +79,7 @@ export default function App() {
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="header" onDoubleClick={toggleDarkMode}>
-        <h1>108在庫管理システム</h1>
+        <h1>順番待ち整理券システム</h1>
         <button 
           type="button" 
           className="dark-mode-toggle visually-hidden" 
@@ -97,18 +97,12 @@ export default function App() {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <input
-          type="number"
-          step="1"
-          min="1"
-          placeholder="制作個数を入力"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={isClicked}>送信</button>
+        <button type="submit" disabled={isClicked}>発券</button>
       </form>
       {ticket && <p className="result">{ticket}</p>}
+    <p>◯番までお呼びいたしました。</p>
+    <p>お待ちの間に資料を御覧ください</p>
+    <p>おおよそ10分ほどでお呼びいたします。</p>
     </div>
   );
 }
