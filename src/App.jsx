@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import "./App.css";
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxeZNwir5wTo13WBxOehhnl1S7Ud90QhUZEuvPVn0u2L_KRY7UE5tLDzj-chKNoei_bog/exec";
@@ -33,9 +33,18 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (ticket) {
+      const timer = setTimeout(() => {
+        setTicket("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [ticket]);
+
   return (
     <div className="app">
-      <h1>整理券発行システム</h1>
+      <h1>108在庫管理システム</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -45,13 +54,15 @@ export default function App() {
           required
         />
         <input
-          type="text"
+          type="number"
+          step="1"
+          min="1"
           placeholder="制作個数を入力"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           required
         />
-        <button type="submit">発行</button>
+        <button type="submit">送信</button>
       </form>
       {ticket && <p className="result">{ticket}</p>}
     </div>
