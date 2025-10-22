@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, use} from "react";
 import "./App.css";
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxeZNwir5wTo13WBxOehhnl1S7Ud90QhUZEuvPVn0u2L_KRY7UE5tLDzj-chKNoei_bog/exec";
@@ -8,9 +8,12 @@ export default function App() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [ticket, setTicket] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsClicked(true);
+
 
     const params = new URLSearchParams();
     params.append("name", name);
@@ -30,6 +33,7 @@ export default function App() {
     } catch (err) {
       console.error(err);
       setTicket("通信エラーが発生しました。");
+      setIsClicked(false);
     }
   };
 
@@ -38,6 +42,7 @@ export default function App() {
       const timer = setTimeout(() => {
         setTicket("");
       }, 5000);
+      setIsClicked(false);
       return () => clearTimeout(timer);
     }
   }, [ticket]);
@@ -62,7 +67,7 @@ export default function App() {
           onChange={(e) => setAmount(e.target.value)}
           required
         />
-        <button type="submit">送信</button>
+        <button type="submit" disabled={isClicked}>送信</button>
       </form>
       {ticket && <p className="result">{ticket}</p>}
     </div>
