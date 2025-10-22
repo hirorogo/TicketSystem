@@ -6,6 +6,7 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbxeZNwir5wTo13WBxOehhnl
 
 export default function App() {
   const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
   const [ticket, setTicket] = useState("");
 
   const handleSubmit = async (e) => {
@@ -13,6 +14,7 @@ export default function App() {
 
     const params = new URLSearchParams();
     params.append("name", name);
+    params.append("amount", amount);
 
     try {
       const res = await fetch(GAS_URL, {
@@ -40,6 +42,13 @@ export default function App() {
           placeholder="名前を入力"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="制作個数を入力"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
           required
         />
         <button type="submit">発行</button>
