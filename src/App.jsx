@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const GAS_URL = "test";
-// ↑ あなたのデプロイ済みApps ScriptのURLに変更してください
+const GAS_URL = "http://localhost:3001/api/tickets";
+// ↑ バックエンドAPIのURLに変更
 
 export default function App() {
   const [name, setName] = useState("");
@@ -27,7 +27,6 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsClicked(true);
-
 
     const params = new URLSearchParams();
     params.append("name", name);
@@ -79,7 +78,7 @@ export default function App() {
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="header" onDoubleClick={toggleDarkMode}>
-        <h1>順番待ち整理券システム</h1>
+        <h1>整理券を発券</h1>
         <button 
           type="button" 
           className="dark-mode-toggle visually-hidden" 
@@ -100,9 +99,9 @@ export default function App() {
         <button type="submit" disabled={isClicked}>発券</button>
       </form>
       {ticket && <p className="result">{ticket}</p>}
-    <p>◯番までお呼びいたしました。</p>
-    <p>お待ちの間に資料を御覧ください</p>
-    <p>おおよそ10分ほどでお呼びいたします。</p>
+      <p>◯番までお呼びいたしました。</p>
+      <p>お待ちの間に資料を御覧ください</p>
+      <p>おおよそ10分ほどでお呼びいたします。</p>
     </div>
   );
 }
