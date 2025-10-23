@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const GAS_URL = "http://localhost:3001/api/tickets";
-// ↑ バックエンドAPIのURLに変更
+const API_URL = "http://localhost:3001/api";
 
 export default function App() {
   const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
   const [ticket, setTicket] = useState("");
   const [isClicked, setIsClicked] = useState(false);
+  const [waitingCount, setWaitingCount] = useState(0);
+  const [currentNumber, setCurrentNumber] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // ローカルストレージからダークモード設定を読み込み
     const saved = localStorage.getItem('darkMode');
     const darkMode = saved ? JSON.parse(saved) : false;
     
-    // 初期読み込み時にbodyクラスを設定
     if (darkMode) {
       document.body.classList.add('dark-mode');
     } else {
@@ -30,10 +28,9 @@ export default function App() {
 
     const params = new URLSearchParams();
     params.append("name", name);
-    params.append("amount", amount);
 
     try {
-      const res = await fetch(GAS_URL, {
+      const res = await fetch(`${API_URL}/tickets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -43,6 +40,8 @@ export default function App() {
 
       const data = await res.json();
       setTicket(`整理券番号：${data.ticket}`);
+      setWaitingCount(data.waitingCount);
+      setName(""); // 名前をクリア
     } catch (err) {
       console.error(err);
       setTicket("通信エラーが発生しました。");
@@ -54,16 +53,32 @@ export default function App() {
     if (ticket) {
       const timer = setTimeout(() => {
         setTicket("");
-      }, 5000);
+        setWaitingCount(0);
+      }, 10000); // 10秒表示
       setIsClicked(false);
       return () => clearTimeout(timer);
     }
   }, [ticket]);
 
-  // ダークモード設定をローカルストレージに保存
+  // 現在の状況を定期的に取得
+  useEffect(() => {
+    const fetchCurrentStatus = async () => {
+      try {
+        const res = await fetch(`${API_URL}/status`);
+        const data = await res.json();
+        setCurrentNumber(data.currentNumber);
+      } catch (err) {
+        console.error('状況取得エラー:', err);
+      }
+    };
+
+    fetchCurrentStatus();
+    const interval = setInterval(fetchCurrentStatus, 10000); // 10秒ごとに更新
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
-    // bodyクラスを切り替え
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
     } else {
@@ -98,10 +113,22 @@ export default function App() {
         />
         <button type="submit" disabled={isClicked}>発券</button>
       </form>
-      {ticket && <p className="result">{ticket}</p>}
-      <p>◯番までお呼びいたしました。</p>
+      {ticket && (
+        <div className="result-container">
+          <p className="result">{ticket}</p>
+          {waitingCount > 0 && (
+            <p className="waiting-info">あと約{waitingCount}人お待ちください</p>
+          )}
+        </div>
+      )}
+      <p>{currentNumber}番までお呼びいたしました。</p>
       <p>お待ちの間に資料を御覧ください</p>
       <p>おおよそ10分ほどでお呼びいたします。</p>
+      
+      <div className="links">
+        <a href="/TicketSystem/admin" target="_blank">管理者パネル</a>
+        <a href="/TicketSystem/status" target="_blank">混雑状況</a>
+      </div>
     </div>
   );
 }

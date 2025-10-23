@@ -1,0 +1,139 @@
+.status-display {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.status-display h1 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.current-number {
+  margin: 40px 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.current-number h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.number-display {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #FFD700;
+  margin: 20px 0;
+  padding: 30px;
+  border: 4px solid #FFD700;
+  border-radius: 20px;
+  display: inline-block;
+  min-width: 200px;
+  background: rgba(255,215,0,0.1);
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.remaining-info {
+  margin: 40px 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.remaining-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.remaining-count {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4ade80;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.congestion-info {
+  margin: 40px 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.congestion-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.congestion-status {
+  display: inline-block;
+  padding: 20px 40px;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 15px;
+  margin: 10px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.updated-time {
+  margin-top: 50px;
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  background: rgba(0,0,0,0.2);
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .status-display {
+    padding: 15px;
+  }
+  
+  .status-display h1 {
+    font-size: 2rem;
+  }
+  
+  .number-display {
+    font-size: 3.5rem;
+    min-width: 150px;
+    padding: 20px;
+  }
+  
+  .remaining-count {
+    font-size: 2.5rem;
+  }
+  
+  .congestion-status {
+    font-size: 1.5rem;
+    padding: 15px 30px;
+  }
+}
