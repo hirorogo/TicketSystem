@@ -154,3 +154,157 @@ body.dark-mode {
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+/* 改善版スタイル */
+:root{
+  --bg-light: #f3f4f6;
+  --bg-dark: #121217;
+  --card-light: #ffffff;
+  --card-dark: #1f1f23;
+  --text-light: #222;
+  --text-dark: #fff;
+  --accent: #0078ff;
+  --muted: #6b7280;
+  --radius: 12px;
+  --transition-fast: 200ms;
+}
+
+*{box-sizing:border-box}
+
+.app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background:var(--bg-light);
+  color:var(--text-light);
+  transition:background var(--transition-fast) ease, color var(--transition-fast) ease;
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:16px;
+  width:100%;
+  max-width:900px;
+  justify-content:center;
+  position:relative;
+}
+
+h1{
+  margin:0;
+  font-size:1.6rem;
+  line-height:1.1;
+  color:inherit;
+}
+
+/* ダークモードトグル（視覚的に隠す場合は .visually-hidden を使う） */
+.dark-mode-toggle{
+  appearance:none;
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.08);
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:transform var(--transition-fast) ease, border-color var(--transition-fast) ease;
+}
+.dark-mode-toggle:hover{ transform:scale(1.05) }
+
+/* フォームカード */
+form{
+  width:100%;
+  max-width:420px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  background:var(--card-light);
+  padding:20px;
+  border-radius:var(--radius);
+  box-shadow:0 6px 18px rgba(16,24,40,0.06);
+  transition:background var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+}
+
+input{
+  padding:10px 12px;
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius:8px;
+  font-size:15px;
+  background:transparent;
+  color:inherit;
+  transition:border-color var(--transition-fast) ease, background var(--transition-fast) ease;
+}
+
+input::placeholder{ color:var(--muted) }
+
+button[type="submit"]{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px;
+  font-size:15px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:filter var(--transition-fast) ease, opacity var(--transition-fast) ease;
+}
+button[type="submit"]:disabled{ opacity:0.6; cursor:not-allowed; filter:grayscale(0.2) }
+
+.result{
+  margin-top:16px;
+  font-weight:600;
+  color:var(--accent);
+}
+
+/* PDF ビューア用ラッパー */
+.pdf-viewer{
+  width:100%;
+  max-width:900px;
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+}
+.react-pdf__Document{ width:100% }
+
+/* ダークモード */
+.app.dark-mode{
+  background:var(--bg-dark);
+  color:var(--text-dark);
+}
+.app.dark-mode form{ background:var(--card-dark); box-shadow:0 6px 18px rgba(0,0,0,0.45) }
+.app.dark-mode input{
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--text-dark);
+  background:transparent;
+}
+.app.dark-mode .dark-mode-toggle{
+  border-color:rgba(255,255,255,0.08);
+  color:var(--text-dark);
+}
+
+/* body に直接ダークモードクラスがつく場合の保護 */
+body.dark-mode{ background:var(--bg-dark); color:var(--text-dark) }
+
+/* 完全に視覚的に隠すユーティリティ（アクセシビリティ維持） */
+.visually-hidden{
+  position:absolute !important;
+  width:1px; height:1px;
+  padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0);
+  white-space:nowrap; border:0;
+}
+
+/* レスポンシブ調整 */
+@media (max-width:480px){
+  h1{ font-size:1.2rem }
+  form{ padding:16px; gap:10px }
+  .dark-mode-toggle{ width:36px; height:36px }
+  .pdf-viewer{ padding:0 8px }
+}
