@@ -5,6 +5,9 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [react()],
   base: '/TicketSystem/',
+  optimizeDeps: {
+    include: ["pdfjs-dist/build/pdf.worker.min.js"],
+  },
   build: {
     rollupOptions: {
       input: {
