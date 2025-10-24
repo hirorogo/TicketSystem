@@ -2,7 +2,13 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3001;
+// by otoneko. 3001 --> 3009
+const PORT = 3009;
+
+// by otoneko.
+const fs = require("fs-extra");
+const path = require("path");
+const DATABASE = path.join(__dirname, "./db/data.json");
 
 app.use(cors());
 app.use(express.json());
@@ -12,7 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 let ticketCounter = 1;
 let currentCalledNumber = 0;
 let congestionStatus = '普通'; // 空いている, 普通, 混雑, 非常に混雑
-let tickets = []; // 発券履歴
+
+// by otoneko.
+// let tickets = []; // 発券履歴
+let tickets = fs.readJsonSync(DATABASE);
 
 // 整理券発行API
 app.post('/api/tickets', (req, res) => {
@@ -28,6 +37,7 @@ app.post('/api/tickets', (req, res) => {
     };
     
     tickets.push(ticket);
+    fs.writeJSONSync(DATABASE, tickets, { spaces: 2 });
     
     console.log(`整理券発行: ${name} -> ${ticketNumber}`);
     
@@ -82,6 +92,8 @@ app.post('/api/admin/reset', (req, res) => {
   ticketCounter = 1;
   currentCalledNumber = 0;
   tickets = [];
+  // by otoneko.
+  fs.writeJsonSync(DATABASE, tickets, { spaces: 2 });
   congestionStatus = '普通';
   console.log('システムリセット');
   res.json({ success: true, message: 'リセット完了' });
