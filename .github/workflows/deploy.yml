@@ -24,7 +24,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # fetch full history (not strictly required but safe)
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -37,7 +36,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build --if-present
+        run: npm run build
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
