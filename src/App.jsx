@@ -123,7 +123,6 @@ export default function App() {
       )}
       <p>{currentNumber}番までお呼びいたしました。</p>
       <p>お待ちの間に資料を御覧ください</p>
-      <p>おおよそ10分ほどでお呼びいたします。</p>
       <p>発券したものはスクショをしてください</p>
       
       <div className="links">
