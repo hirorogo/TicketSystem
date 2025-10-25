@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const API_URL = "http://localhost:3001/api";
+const API_URL = "http://5.104.86.48:3009";
 
 export default function App() {
   const [name, setName] = useState("");
@@ -124,10 +124,10 @@ export default function App() {
       <p>{currentNumber}番までお呼びいたしました。</p>
       <p>お待ちの間に資料を御覧ください</p>
       <p>おおよそ10分ほどでお呼びいたします。</p>
+      <p>発券したものはスクショをしてください</p>
       
       <div className="links">
-        <a href="/TicketSystem/admin" target="_blank">管理者パネル</a>
-        <a href="/TicketSystem/status" target="_blank">混雑状況</a>
+        <a href="/TicketSystem/status" target="_blank">混雑状況呼び出し状況</a>
       </div>
     </div>
   );
