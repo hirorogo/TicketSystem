@@ -127,7 +127,7 @@ export default function App() {
       <p>発券したものはスクショをしてください</p>
       
       <div className="links">
-        <a href="/TicketSystem/status" target="_blank">混雑状況呼び出し状況</a>
+        <a href="/TicketSystem/status" target="_blank">混雑状◯況呼び出し状況</a>
       </div>
     </div>
   );
