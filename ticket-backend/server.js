@@ -99,6 +99,6 @@ app.post('/api/admin/reset', (req, res) => {
   res.json({ success: true, message: 'リセット完了' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`バックエンドサーバー起動: http://localhost:${PORT}`);
 });
